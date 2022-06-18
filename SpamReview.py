@@ -1,18 +1,13 @@
 import streamlit as st
-import numpy as np
 import pandas as pd
-import time
-import plotly.express as px
-import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib import pyplot
 import seaborn as sns
 import string
 import nltk
 import wordcloud
 from nltk.corpus import stopwords
 from collections import Counter
+from sklearn.feature_extraction.text import CountVectorizer
 nltk.download('stopwords')
 nltk.download('punkt')
 import warnings
@@ -58,12 +53,52 @@ st.set_page_config(
     layout='wide'
 )
 
+#background styling
+page_bg = '''
+<style>
+body {
+background-color : #2C3539;
+}
+</style>
+'''
+st.markdown(page_bg, unsafe_allow_html=True)
+
+#navbar styling
+st.markdown(
+    """
+<style>
+.sidebar .sidebar-content {
+    background-image: linear-gradient(#292929,#E65142;9);
+    color: black;
+    align-text: center;
+}
+hr.rounded {
+        border-top: 6px solid #E65142;
+        border-radius: 5px;
+    }
+</style>
+""", unsafe_allow_html=True,
+)
+
+#inserting image in the sidebar
+st.sidebar.image('img/filkom.png', use_column_width=True)
+
+
+#navbar content-1
+html3 = '''
+<h2 style="text-align: center;">Spam Review</h2>
+<p style="text-align: center; font-size: 15px">Tugas Akhir Visualisasi Data Kelompok 9</p>
+<hr class="rounded">
+'''
+st.sidebar.markdown(html3, unsafe_allow_html=True)
+
+
 # dashboard title
 st.title("Real-Time / Live Spam Review Dashboard")
 
 # top-level filters
 
-label_filter = st.selectbox("Select Label", ['All', 'spam', 'ham'])
+label_filter = st.sidebar.selectbox("Select Label", ['All', 'spam', 'ham'])
 
 if "All" in label_filter:
     sms = sms
